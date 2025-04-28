@@ -47,13 +47,13 @@ func main() {
 				catURL, err := client.GetRandomCatImageURL()
 				if err != nil {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Не удалось получить котика 😿")
-					bot.send(msg)
+					bot.Send(msg)
 					continue
 				}
 
 				photo := tgbotapi.NewPhoto(update.Message.Chat.ID, tgbotapi.FileURL(catURL))
-				phot.Caption = "Вот твой котик! 🐱"
-				bot.send(photo)
+				photo.Caption = "Вот твой котик! 🐱"
+				bot.Send(photo)
 
 			default:
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Мяу, я не понимаю 😿")
