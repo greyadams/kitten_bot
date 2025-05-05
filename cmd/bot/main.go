@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -8,10 +9,13 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/greyadams/kitten_bot/internal/client"
+	"github.com/greyadams/kitten_bot/internal/storage"
 )
 
 func main() {
-	err := godotenv.Load("../.env")
+	stats := &storage.Stats{}
+
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Ошибка загрузки .env файла")
 	}
@@ -54,6 +58,26 @@ func main() {
 				photo := tgbotapi.NewPhoto(update.Message.Chat.ID, tgbotapi.FileURL(catURL))
 				photo.Caption = "Вот твой котик! 🐱"
 				bot.Send(photo)
+				stats.IncCat()
+
+			case "meme":
+				url, err := client.GetRandomMemeURL()
+				if err != nil {
+					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Ошибка при получении мема 😿")
+					bot.Send(msg)
+					continue
+				}
+
+				photo := tgbotapi.NewPhoto(update.Message.Chat.ID, tgbotapi.FileURL(url))
+				photo.Caption = "😸😸😸"
+				bot.Send(photo)
+				stats.IncMeme()
+
+			case "stats":
+				cats, memes := stats.GetStats()
+				text := fmt.Sprintf("Статистика:\nКотики: %d\nМемы: %d", cats, memes)
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, text)
+				bot.Send(msg)
 
 			default:
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Мяу, я не понимаю 😿")
