@@ -2,8 +2,10 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
+
+	"github.com/greyadams/kitten_bot/internal/logger"
 )
 
 type CatAPIResponse struct {
@@ -13,22 +15,27 @@ type CatAPIResponse struct {
 func GetRandomCatImageURL() (string, error) {
 	resp, err := http.Get("https://api.thecatapi.com/v1/images/search")
 	if err != nil {
-		return "", fmt.Errorf("Ошибка запроса: статус %d", resp.StatusCode)
+		logger.Log.WithError(err).Error("Ошибка отправки запроса к TheCatAPI")
+		return "", err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("Ошибка запроса (не удалось получить котика): статус %d", resp.StatusCode)
+		logger.Log.WithField("status", resp.StatusCode).Error("Неожиданный статус код от TheCatAPI: %d", resp.StatusCode)
+		return "", errors.New("не удалось получить картинку котика")
 	}
 
 	var data []CatAPIResponse
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		return "", fmt.Errorf("Ошибка ответа: статус %d", resp.StatusCode)
+		logger.Log.WithError(err).Error("Ошибка декодирования ответа от TheCatAPI")
+		return "", err
 	}
 
 	if len(data) == 0 {
-		return "", fmt.Errorf("Пустой ответ от TheCatAPI: статус %d", resp.StatusCode)
+		logger.Log.Warn("Пустой ответ от TheCatAPI")
+		return "", errors.New("пустой ответ от TheCatAPI")
 	}
 
+	logger.Log.WithField("image_url", data[0].URL).Info("Картинка котика успешно получена")
 	return data[0].URL, nil
 }

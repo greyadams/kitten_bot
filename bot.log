@@ -1,0 +1,13 @@
+time="2025-05-06T21:13:16+03:00" level=info msg="Бот запущен"
+time="2025-05-06T21:13:44+03:00" level=info msg="Получено сообщение" command=/meow user_id=1236380380 username=grey_adams
+time="2025-05-06T21:13:44+03:00" level=info msg="Картинка котика успешно получена" image_url="https://cdn2.thecatapi.com/images/MTc3MjkwNA.gif"
+time="2025-05-06T21:13:45+03:00" level=info msg="Фото отправлено"
+time="2025-05-06T21:13:52+03:00" level=info msg="Получено сообщение" command=/meow user_id=1236380380 username=grey_adams
+time="2025-05-06T21:13:52+03:00" level=info msg="Картинка котика успешно получена" image_url="https://cdn2.thecatapi.com/images/4mg.gif"
+time="2025-05-06T21:13:52+03:00" level=info msg="Фото отправлено"
+time="2025-05-06T21:14:02+03:00" level=info msg="Получено сообщение" command=/meow user_id=1236380380 username=grey_adams
+time="2025-05-06T21:14:02+03:00" level=info msg="Картинка котика успешно получена" image_url="https://cdn2.thecatapi.com/images/ba4.jpg"
+time="2025-05-06T21:14:02+03:00" level=info msg="Фото отправлено"
+time="2025-05-06T21:14:08+03:00" level=info msg="Получено сообщение" command=/meow user_id=1236380380 username=grey_adams
+time="2025-05-06T21:14:08+03:00" level=info msg="Картинка котика успешно получена" image_url="https://cdn2.thecatapi.com/images/2sc.jpg"
+time="2025-05-06T21:14:08+03:00" level=info msg="Фото отправлено"
